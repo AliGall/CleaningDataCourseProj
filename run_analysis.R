@@ -47,5 +47,6 @@ tidydf <- cbind(subjects, activities, mysubsetdf) %>%
   summarise_all(mean)
 
 write.csv(tidydf, file="./CleaningDataCourseProj/tidydf.csv")
+write.table(tidydf, file="./CleaningDataCourseProj/tidydf.txt", row.name = FALSE) ## for submission
 
 
