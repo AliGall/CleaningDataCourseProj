@@ -14,32 +14,32 @@ testsubj <- read.table("./data/UCI/test/subject_test.txt")
 featuresdf <- read.table("./data/UCI/features.txt")
 activitylabels <- read.table("./data/UCI/activity_labels.txt", stringsAsFactors = FALSE)
 
-## 1. Merge the training and the test sets to create one data set
+## Requirement 1. Merge the training and the test sets to create one data set
 
 activities <- rbind(trainacts, testacts)
 subjects <- rbind(trainsubj, testsubj)
 combinedata <- rbind(traindata, testdata)
 
-## 4. Appropriately label the data set with descriptive variable names
+## Requirement 4. Appropriately label the data set with descriptive variable names
 
 names(activities) <- c("Activity")
 names(subjects) <- c("Subject")
 names(combinedata) <- featuresdf[,2]
 
-## 2. Extract only the measurements on the mean and standard deviation for each measurement
+## Requirement 2. Extract only the measurements on the mean and standard deviation for each measurement
 
 meansdf <- combinedata[grepl("-mean\\(\\)", featuresdf[,2])]
 stddf <- combinedata[grepl("-std\\(\\)", featuresdf[,2])]
 mysubsetdf <- cbind(meansdf, stddf)
 mysubsetdf <- mysubsetdf[order(names(mysubsetdf))]
 
-## 3. Use descriptive activity names to name the activities in the data set
+## Requirement 3. Use descriptive activity names to name the activities in the data set
 
 for (i in activitylabels[,1]) {
   activities <- replace(activities, (activities == i), activitylabels[i,2])  
 }
 
-## 5. Create an independent tidy data set with average of each variable 
+## Requirement 5. Create an independent tidy data set with average of each variable 
 ##    for each activity and each subject
 
 tidydf <- cbind(subjects, activities, mysubsetdf) %>% 
